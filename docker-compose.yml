@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+  debezium-cloud-mysql:
+    image: quay.io/debezium/server:${DEBEZIUM_VERSION}
+    container_name: debezium-cloud-mysql
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /tmp/credentials/service-account.json
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./credentials/service-account.json:/tmp/credentials/service-account.json
+      - ./configs/cloud-mysql/mysql:/debezium/conf
+  debezium-cloud-postgres:
+    image: quay.io/debezium/server:${DEBEZIUM_VERSION}
+    container_name: debezium-cloud-postgres
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /tmp/credentials/service-account.json
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./credentials/service-account.json:/tmp/credentials/service-account.json
+      - ./configs/cloud-postgres/postgres:/debezium/conf
